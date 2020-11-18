@@ -1,23 +1,21 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const bodyParser = require("body-parser");
+
+const PORT = process.env.PORT || 7201;
+const environment = process.env.NODE_ENV || 'local';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-// Initializations
-const ROUTES = require('./routes/index');
-
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 7201;
-const environment = process.env.NODE_ENV || 'development';
-// Charge dataset app express
 app.set('port', PORT);
-// Routes
-app.use(ROUTES);
+require("./routes/user")(app);
 
-// Server is listening
 app.listen(app.get('port'), () => {
   console.log(`Server started as '${environment}' environment on http://localhost:${PORT}`);
 });
