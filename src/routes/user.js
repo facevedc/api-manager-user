@@ -1,14 +1,20 @@
+/* eslint-disable global-require */
 module.exports = app => {
-    const SERVICE = 'users';
-    const usuarios = require('../controller/users.controller');
+  const SERVICE = "users";
+  const USERS_BY_STORE = "usersByStore";
+  const usuarios = require("../controller/users.controller");
 
-    app.post(`/${SERVICE}`, usuarios.crear);
+  // Create user expose
+  app.post(`/${SERVICE}/create`, usuarios.crear);
 
-    app.get(`/${SERVICE}`, usuarios.buscarTodos);
+  // List user expose
+  app.get(`/${SERVICE}`, usuarios.buscarTodos);
+  app.get(`/${SERVICE}/:rut`, usuarios.buscarPorRut);
+  app.get(`/${USERS_BY_STORE}/:store`, usuarios.buscarPorTienda);
 
-    app.get(`/${SERVICE}/:rut`, usuarios.buscarPorRut);
+  // Modify user expose
+  app.put(`/${SERVICE}/:rut`, usuarios.modificar);
 
-    app.put(`/${SERVICE}/:rut`, usuarios.modificar);
-
-    app.delete(`/${SERVICE}/:rut`, usuarios.eliminar);
+  // Delete user expose
+  app.delete(`/${SERVICE}/:rut`, usuarios.eliminar);
 };

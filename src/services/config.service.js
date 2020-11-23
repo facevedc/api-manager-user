@@ -1,10 +1,10 @@
 /* eslint-disable import/no-dynamic-require */
-const env = process.env.NODE_ENV || 'local';
+const env = process.env.NODE_ENV || "local";
 const environment = env;
 const config = require(`../config/environment/${environment}.config.js`);
 
 function getConfig() {
-  const allowedEnvironments = ['local', 'development', 'production'];
+  const allowedEnvironments = ["local", "development", "production"];
 
   if (allowedEnvironments.includes(environment)) {
     return config;
@@ -14,11 +14,13 @@ function getConfig() {
 
 function getExternalServiceUrl(name) {
   const externalServicesList = config.externalServices;
-  const externalService = externalServicesList.find(service => service.name === name);
+  const externalService = externalServicesList.find(
+    service => service.name === name
+  );
   return externalService.data;
 }
 
 module.exports = {
   getConfig,
-  getExternalServiceUrl,
+  getExternalServiceUrl
 };
